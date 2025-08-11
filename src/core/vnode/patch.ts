@@ -1,0 +1,89 @@
+import { ElementVNode } from "./ElementVNode.js";
+import { TextVNode } from "./TextVNode.js";
+import { Patch } from "./types.js";
+import { VNodeBase } from "./VNodeBase.js";
+
+export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
+  if (!patch) return null;
+
+  switch (patch.type) {
+    case "REPLACE": {
+      const newDom = patch.newVNode.mount();
+      if (oldVNode.dom && "replaceWith" in oldVNode.dom) {
+        (oldVNode.dom as ChildNode).replaceWith(newDom);
+      }
+
+      patch.newVNode.dom = newDom;
+      break;
+    }
+
+    case "REMOVE": {
+      oldVNode.unmount();
+      break;
+    }
+
+    case "TEXT": {
+      if (oldVNode instanceof TextVNode && oldVNode.dom) {
+        console.log(
+          `Patching TextVNode #${oldVNode.id} from "${oldVNode.text}" to "${patch.newText}"`
+        );
+        oldVNode.dom.textContent = patch.newText;
+        oldVNode.dom.textContent = patch.newText;
+        oldVNode.text = patch.newText;
+      }
+      break;
+    }
+
+    case "UPDATE_CHILDREN": {
+      if (oldVNode instanceof ElementVNode && oldVNode.dom) {
+        const el = oldVNode.dom;
+
+        // update props
+        for (const key of patch.propsToRemove) {
+          if (key.startsWith("on")) {
+            const eventName = key.slice(2).toLowerCase();
+            const oldHandler = oldVNode.props[key];
+            if (typeof oldHandler === "function") {
+              el.removeEventListener(eventName, oldHandler);
+              oldVNode.attachedListeners?.delete(eventName);
+            }
+          } else {
+            el.removeAttribute(key);
+          }
+        }
+
+        // props to update
+        for (const [key, value] of Object.entries(patch.propsToUpdate)) {
+          if (key.startsWith("on") && typeof value === "function") {
+            const eventName = key.slice(2).toLowerCase();
+
+            const oldHandler = oldVNode.props[key];
+            if (typeof oldHandler === "function") {
+              el.removeEventListener(eventName, oldHandler);
+              oldVNode.attachedListeners?.delete(eventName);
+            }
+            el.addEventListener(eventName, value);
+            oldVNode.attachedListeners?.set(eventName, value);
+
+            console.log("Attached Listeners: ", oldVNode.attachedListeners);
+          } else {
+            el.setAttribute(key, value);
+          }
+        }
+
+        // child patches
+        for (let i = 0; i < patch.childrenPatches.length; i++) {
+          const childPatch = patch.childrenPatches[i];
+          const oldChild = oldVNode.children[i];
+
+          if (childPatch) {
+            if (oldChild instanceof VNodeBase) {
+              applyPatch(oldChild, childPatch);
+            }
+          }
+        }
+      }
+      break;
+    }
+  }
+}

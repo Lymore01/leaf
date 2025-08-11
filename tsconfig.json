@@ -1,0 +1,21 @@
+{
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "tests"],
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "module": "CommonJS",
+    "target": "es6",
+    "outDir": "dist/main",
+    "rootDir": "src",
+    "sourceMap": true,
+
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+
+    "forceConsistentCasingInFileNames": true,
+    "stripInternal": true
+  }
+}

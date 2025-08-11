@@ -1,0 +1,22 @@
+{
+  "name": "leaf",
+  "version": "1.0.0",
+  "description": "leaf/",
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "ts-node --loader ts-node/esm src/index.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^24.2.1",
+    "jsdom": "^26.1.0",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.8.1",
+    "typescript": "^5.9.2"
+  }
+}
