@@ -1,4 +1,4 @@
-import { diff } from "../diff.js";
+import { diff } from "../diffing/diff.js";
 import { renderElementNode } from "../render.js";
 import { applyPatch } from "./patch.js";
 import {
@@ -16,6 +16,7 @@ export class ElementVNode extends VNodeBase {
   dom?: HTMLElement;
   hooks?: Map<LifecycleHookName, LifecycleHookFn[LifecycleHookName]>;
   attachedListeners?: Map<string, EventListener>;
+  key?: string | number | undefined;
 
   constructor({ type, props, children }: ElementVNodeProps) {
     super();

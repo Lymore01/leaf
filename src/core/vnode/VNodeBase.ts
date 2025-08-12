@@ -1,6 +1,7 @@
 export abstract class VNodeBase {
   dom?: Node;
-  
+  key?: number | string;
+
   abstract mount(): Node;
   abstract patch(newNode: VNodeBase): void;
   abstract unmount(): void;

@@ -31,4 +31,25 @@ export type Patch =
       propsToUpdate: Record<string, any>;
       propsToRemove: string[];
       childrenPatches: Array<Patch | null>;
+    }
+  | {
+      type: "KEYED_UPDATE_CHILDREN";
+      keyedPatches: KeyedChildPatch[];
+    };
+
+export type KeyedChildPatch =
+  | {
+      type: "INSERT";
+      index: number;
+      newVNode: VNodeBase;
+    }
+  | {
+      type: "REMOVE";
+      oldVNode: VNodeBase;
+    }
+  | {
+      type: "PATCH";
+      index: number;
+      oldVNode: VNodeBase;
+      newVNode: VNodeBase;
     };

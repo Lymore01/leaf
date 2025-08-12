@@ -1,4 +1,4 @@
-import { diff } from "../diff.js";
+import { diff } from "../diffing/diff.js";
 import { renderTextNode } from "../render.js";
 import { applyPatch } from "./patch.js";
 import { removeNode } from "./unmount.js";

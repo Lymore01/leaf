@@ -1,4 +1,4 @@
-import { diff } from "./core/diff.js";
+import { diff } from "./core/diffing/diff.js";
 import { effect, reactive } from "./core/reactive.js";
 import { applyPatch } from "./core/vnode/patch.js";
 import { VNodeBase } from "./core/vnode/VNodeBase.js";
@@ -9,26 +9,56 @@ const dom = new JSDOM(`<!DOCTYPE html><body></body>`);
 global.window = dom.window as unknown as Window & typeof globalThis;
 global.document = dom.window.document;
 
-const state = reactive({ count: 0 });
+const oldChildren = [
+  h("li", { key: "a" }, ["A"]),
+  h("li", { key: "b" }, ["B"]),
+  h("li", { key: "c" }, ["C"]),
+];
 
-let oldVNode: VNodeBase | null = null;
+const newChildren = [
+  h("li", { key: "b" }, ["B (updated)"]),
+  h("li", { key: "d" }, ["D"]),
+  h("li", { key: "c" }, ["C"]),
+];
 
-effect(() => {
-  const newVNode = h("div", {}, [`Count is ${state.count}`]);
+const oldVNode = h("ul", {}, oldChildren);
+const newVNode = h("ul", {}, newChildren);
 
-  if (oldVNode === null) {
-    const domElement = newVNode.mount();
-    document.body.appendChild(domElement);
-    oldVNode = newVNode;
-  } else {
-    const patch = diff(oldVNode, newVNode);
-    console.log(patch)
-    applyPatch(oldVNode, patch);
-  }
+document.body.appendChild(oldVNode.mount());
 
-  console.log("DOM:", document.body.innerHTML);
-});
+const beforeHTML = document.body.innerHTML;
 
-setInterval(() => {
-  state.count++;
-}, 1000);
+const patch = diff(oldVNode, newVNode);
+
+// console.dir(patch, { depth: null });
+
+applyPatch(oldVNode, patch);
+
+const afterHTML = document.body.innerHTML;
+
+console.log("Before Patch:\n", beforeHTML);
+console.log("After Patch:\n", afterHTML);
+
+// const state = reactive({ count: 0 });
+
+// let oldVNode: VNodeBase | null = null;
+
+// effect(() => {
+//   const newVNode = h("div", {}, [`Count is ${state.count}`]);
+
+//   if (oldVNode === null) {
+//     const domElement = newVNode.mount();
+//     document.body.appendChild(domElement);
+//     oldVNode = newVNode;
+//   } else {
+//     const patch = diff(oldVNode, newVNode);
+//     console.log(patch)
+//     applyPatch(oldVNode, patch);
+//   }
+
+//   console.log("DOM:", document.body.innerHTML);
+// });
+
+// setInterval(() => {
+//   state.count++;
+// }, 1000);

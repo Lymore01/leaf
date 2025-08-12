@@ -34,6 +34,40 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
       break;
     }
 
+    case "KEYED_UPDATE_CHILDREN": {
+      if (!(oldVNode instanceof ElementVNode) || !oldVNode.dom) break;
+
+      const parentEl = oldVNode.dom;
+
+      for (const childPatch of patch.keyedPatches) {
+        switch (childPatch.type) {
+          case "INSERT": {
+            const newDom = childPatch.newVNode.mount();
+            const refNode = parentEl?.childNodes[childPatch.index] || null;
+            parentEl?.insertBefore(newDom, refNode);
+            console.log("Parent Element: ", parentEl.innerHTML);
+            childPatch.newVNode.dom = newDom;
+            break;
+          }
+
+          case "REMOVE": {
+            childPatch.oldVNode.unmount();
+            break;
+          }
+
+          case "PATCH": {
+            applyPatch(childPatch.oldVNode, {
+              type: "REPLACE",
+              newVNode: childPatch.newVNode,
+            });
+            break;
+          }
+        }
+      }
+
+      break;
+    }
+
     case "UPDATE_CHILDREN": {
       if (oldVNode instanceof ElementVNode && oldVNode.dom) {
         const el = oldVNode.dom;
@@ -73,7 +107,7 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
 
         // child patches
         for (let i = 0; i < patch.childrenPatches.length; i++) {
-          const childPatch = patch.childrenPatches[i];
+          const childPatch = patch.childrenPatches[i]; // new
           const oldChild = oldVNode.children[i];
 
           if (childPatch) {

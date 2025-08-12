@@ -8,10 +8,20 @@ function normalizeChildren(children: (VNodeBase | string)[]): VNodeBase[] {
   );
 }
 
-export function h(type: string, props: any, children: (VNodeBase | string)[]) {
-  return new ElementVNode({
-    type,
-    props,
+export function h(
+  tag: string,
+  props: any = {},
+  children: (VNodeBase | string)[]
+) {
+  const { key, ...rest } = props;
+  const vNode = new ElementVNode({
+    type: tag,
+    props: rest,
     children: normalizeChildren(children),
   });
+
+  if (key !== undefined) {
+    vNode.key = key;
+  }
+  return vNode;
 }
