@@ -9,20 +9,22 @@ const dom = new JSDOM(`<!DOCTYPE html><body></body>`);
 global.window = dom.window as unknown as Window & typeof globalThis;
 global.document = dom.window.document;
 
-const oldChildren = [
+const oldVNode = h("ul", {}, [
   h("li", { key: "a" }, ["A"]),
   h("li", { key: "b" }, ["B"]),
-  h("li", { key: "c" }, ["C"]),
-];
+]);
 
-const newChildren = [
-  h("li", { key: "b" }, ["B (updated)"]),
-  h("li", { key: "d" }, ["D"]),
-  h("li", { key: "c" }, ["C"]),
-];
+const newVNode = h("ul", {}, [
+  h("div", { key: "a" }, ["A as <div> now"]),
+  h("li", { key: "b" }, ["B updated"]),
+]);
+;
 
-const oldVNode = h("ul", {}, oldChildren);
-const newVNode = h("ul", {}, newChildren);
+// const oldVNode = h("ul", {}, oldChildren);
+// const newVNode = h("ul", {}, newChildren);
+
+// console.log("Old vNode: ");
+// console.dir(oldVNode, { depth: null });
 
 document.body.appendChild(oldVNode.mount());
 

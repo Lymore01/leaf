@@ -1,3 +1,4 @@
+import { diff } from "../diffing/diff.js";
 import { ElementVNode } from "./ElementVNode.js";
 import { TextVNode } from "./TextVNode.js";
 import { Patch } from "./types.js";
@@ -37,29 +38,35 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
     case "KEYED_UPDATE_CHILDREN": {
       if (!(oldVNode instanceof ElementVNode) || !oldVNode.dom) break;
 
-      const parentEl = oldVNode.dom;
+      const parentEl = oldVNode.dom.parentElement;
+      console.log("Parent element (overwritten): ", parentEl);
+
+      // remove all children first
+      for (const childPatch of patch.keyedPatches) {
+        if (childPatch.type === "REMOVE") {
+          childPatch.oldVNode.unmount();
+        }
+      }
 
       for (const childPatch of patch.keyedPatches) {
         switch (childPatch.type) {
           case "INSERT": {
+            // console.log("Before Inserting: ", childPatch.newVNode.dom?.textContent): undefined
             const newDom = childPatch.newVNode.mount();
+            // console.log("New Dom to insert: ", newDom);
             const refNode = parentEl?.childNodes[childPatch.index] || null;
             parentEl?.insertBefore(newDom, refNode);
-            console.log("Parent Element: ", parentEl.innerHTML);
             childPatch.newVNode.dom = newDom;
             break;
           }
 
-          case "REMOVE": {
-            childPatch.oldVNode.unmount();
-            break;
-          }
-
           case "PATCH": {
-            applyPatch(childPatch.oldVNode, {
-              type: "REPLACE",
-              newVNode: childPatch.newVNode,
-            });
+            const innerPatch = diff(childPatch.oldVNode, childPatch.newVNode);
+            applyPatch(childPatch.oldVNode, innerPatch);
+            // applyPatch(childPatch.oldVNode, {
+            //   type: "REPLACE",
+            //   newVNode: childPatch.newVNode,
+            // });
             break;
           }
         }
@@ -99,7 +106,7 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
             el.addEventListener(eventName, value);
             oldVNode.attachedListeners?.set(eventName, value);
 
-            console.log("Attached Listeners: ", oldVNode.attachedListeners);
+            // console.log("Attached Listeners: ", oldVNode.attachedListeners);
           } else {
             el.setAttribute(key, value);
           }
@@ -116,7 +123,9 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
             }
           }
         }
+        // console.log("Correct parent element: ", el);
       }
+
       break;
     }
   }
