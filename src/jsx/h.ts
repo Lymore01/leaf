@@ -1,0 +1,51 @@
+import { ElementVNode } from "../core/vnode/ElementVNode.js";
+import { FragmentNode } from "../core/vnode/FragmentNode.js";
+import { TextVNode } from "../core/vnode/TextVNode.js";
+import { VNodeBase } from "../core/vnode/VNodeBase.js";
+
+export const Fragment = Symbol("Fragment");
+
+function normalizeChildren(children: any): VNodeBase[] {
+  if (!children) return [];
+  
+  if (!Array.isArray(children)) {
+    children = [children];
+  }
+  
+  return children.flat().map((child: any) => {
+    if (child === null || child === undefined || typeof child === 'boolean') {
+      return new TextVNode('');
+    }
+    if (typeof child === "string" || typeof child === "number") {
+      return new TextVNode(String(child));
+    }
+    if (child instanceof VNodeBase) {
+      return child;
+    }
+    return new TextVNode(String(child));
+  });
+}
+
+export function h(
+  tag: string | Symbol,
+  props: any = {},
+  ...children: any[]
+) {
+  const safeProps = props || {};
+  const { key, ...rest } = safeProps;
+
+  if (tag === Fragment) {
+    return new FragmentNode(normalizeChildren(children));
+  }
+  
+  const vNode = new ElementVNode({
+    type: tag as string,
+    props: rest,
+    children: normalizeChildren(children),
+  });
+
+  if (key !== undefined) {
+    vNode.key = key;
+  }
+  return vNode;
+}

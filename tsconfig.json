@@ -1,21 +1,25 @@
 {
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "tests"],
+  "include": ["src", "global.d.ts"],
+  "exclude": ["node_modules", ".leaf", "tests"],
   "compilerOptions": {
+    "jsx": "react",
+    "jsxFactory": "h",
     "declaration": true,
     "declarationMap": true,
-    "module": "CommonJS",
-    "target": "es6",
-    "outDir": "dist/main",
+    "module": "ESNext",         
+    "target": "ES2020",
+    "outDir": ".leaf/main",
     "rootDir": "src",
     "sourceMap": true,
 
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
+    "moduleResolution": "bundler",
 
     "forceConsistentCasingInFileNames": true,
     "stripInternal": true
+
+    
   }
 }

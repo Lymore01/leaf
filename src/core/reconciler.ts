@@ -1,1 +1,0 @@
-// efficient DOM updates - prevent re-rendering

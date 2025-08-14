@@ -1,7 +1,7 @@
 import { diff } from "./diff.js";
 import { KeyedChildPatch, Patch } from "../vnode/types.js";
 import { VNodeBase } from "../vnode/VNodeBase.js";
-import { wrapText } from "../utils/wrap_text.js";
+import { wrapText } from "../../utils/wrap_text.js";
 
 export function diffChildrenWithKeys(
   oldChildren: Array<VNodeBase | string>,
@@ -27,7 +27,6 @@ export function diffChildrenWithKeys(
   newChildren.forEach((child, i) => {
     if (typeof child === "string") {
       if (unkeyedIndex < unkeyedOld.length) {
-        // patch
         const old = unkeyedOld[unkeyedIndex++];
 
         keyedPatches.push({
@@ -37,7 +36,6 @@ export function diffChildrenWithKeys(
           oldVNode: wrapText(old),
         });
       } else {
-        // insert
         keyedPatches.push({
           type: "INSERT",
           index: i,

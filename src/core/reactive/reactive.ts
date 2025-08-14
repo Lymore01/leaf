@@ -1,4 +1,5 @@
-// make an object reactive
+
+// use in shared state
 export function reactive<T extends object>(target: T): T {
   return new Proxy(target, {
     get(obj, key, receiver) {
@@ -39,7 +40,7 @@ function track(target: object, key: string | symbol) {
   dep.add(activeEffect);
 }
 
-// re-runs effects when that state key changes
+// reruns effects when that state key changes
 function trigger(target: object, key: string | symbol) {
   const depsMap = targetMap.get(target);
   if (!depsMap) return;

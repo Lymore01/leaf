@@ -1,10 +1,10 @@
-import { wrapText } from "../utils/wrap_text";
-import { Patch } from "../vnode/types";
-import { VNodeBase } from "../vnode/VNodeBase";
-import { diff } from "./diff";
+import { wrapText } from "../../utils/wrap_text.js";
+import { Patch } from "../vnode/types.js";
+import { VNodeBase } from "../vnode/VNodeBase.js";
+import { diff } from "./diff.js";
 
-// this uses indexes
 
+// using indexes
 export function diffChildren(
   oldChildren: Array<VNodeBase | string>,
   newChildren: Array<VNodeBase | string>

@@ -1,4 +1,4 @@
-import { VNodeBase } from "../vnode/VNodeBase";
+import { VNodeBase } from "../vnode/VNodeBase.js";
 
 function hasKey(child: VNodeBase | string): boolean {
   return typeof child !== "string" && child.key != null;

@@ -1,4 +1,3 @@
-import { ElementVNode } from "./ElementVNode.js";
 import { VNodeBase } from "./VNodeBase.js";
 
 export type ElementVNodeProps = {

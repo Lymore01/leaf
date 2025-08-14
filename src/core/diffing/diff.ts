@@ -1,4 +1,5 @@
 import { ElementVNode } from "../vnode/ElementVNode.js";
+import { FragmentNode } from "../vnode/FragmentNode.js";
 import { TextVNode } from "../vnode/TextVNode.js";
 import { VNodeBase } from "../vnode/VNodeBase.js";
 import { Patch } from "../vnode/types.js";
@@ -32,6 +33,18 @@ export function diff(
       return { type: "TEXT", newText: newVNode.text };
     }
     return null;
+  }
+
+  if (oldVNode instanceof FragmentNode && newVNode instanceof FragmentNode) {
+    const childrenPatches = diffChildren(oldVNode.children, newVNode.children);
+    const noChildrenChanges = childrenPatches.every((p) => p === null);
+    if (noChildrenChanges) return null;
+    return {
+      type: "UPDATE_CHILDREN",
+      propsToUpdate: {},
+      propsToRemove: [],
+      childrenPatches,
+    };
   }
 
   if (oldVNode instanceof ElementVNode && newVNode instanceof ElementVNode) {

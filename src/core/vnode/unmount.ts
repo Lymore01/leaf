@@ -1,6 +1,6 @@
-import { ElementVNode } from "./ElementVNode";
-import { TextVNode } from "./TextVNode";
-import { VNodeBase } from "./VNodeBase";
+import { ElementVNode } from "./ElementVNode.js";
+import { TextVNode } from "./TextVNode.js";
+import { VNodeBase } from "./VNodeBase.js";
 
 export function removeNode(node: VNodeBase) {
   if (node instanceof TextVNode) {

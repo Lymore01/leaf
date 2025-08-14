@@ -1,6 +1,6 @@
 import { diff } from "../diffing/diff.js";
-import { renderElementNode } from "../render.js";
 import { applyPatch } from "./patch.js";
+import { renderElementNode } from "./render.js";
 import {
   ElementVNodeProps,
   LifecycleHookName,
@@ -44,7 +44,6 @@ export class ElementVNode extends VNodeBase {
 
   mount(): HTMLElement {
     const el = renderElementNode(this);
-    this.dom = el;
 
     this.callHook("onMount");
 

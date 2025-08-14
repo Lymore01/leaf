@@ -1,7 +1,8 @@
-import { ElementVNode } from "./vnode/ElementVNode.js";
-import { TextVNode } from "./vnode/TextVNode.js";
-import { LifecycleHookName } from "./vnode/types.js";
-import { VNodeBase } from "./vnode/VNodeBase.js";
+import { ElementVNode } from "./ElementVNode.js";
+import { FragmentNode } from "./FragmentNode.js";
+import { TextVNode } from "./TextVNode.js";
+import { LifecycleHookName } from "./types.js";
+import { VNodeBase } from "./VNodeBase.js";
 
 const hookKeys: LifecycleHookName[] = ["onMount", "onUnmount", "onUpdate"];
 
@@ -50,4 +51,16 @@ export function renderElementNode(vElementNode: ElementVNode): HTMLElement {
 
 export function renderTextNode(vTextNode: TextVNode): Text {
   return document.createTextNode(vTextNode.text);
+}
+
+export function renderFragmentNode(fragmentNode: VNodeBase) {
+  const fragment = document.createDocumentFragment();
+
+  if (fragmentNode instanceof FragmentNode) {
+    for (const child of fragmentNode.children) {
+      fragment.appendChild(child.mount());
+    }
+  }
+
+  return fragment;
 }
