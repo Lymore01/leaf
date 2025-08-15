@@ -3,5 +3,7 @@
 **Leaf** is a minimal and intuitive JavaScript framework for building reactive user interfaces with fine-grained control and declarative rendering.  
 Inspired by Reactivity and JSX, but built your way.
 
-![Progress](./assets/progress.png)
+<!-- Screenshot of the app after running -->
+![Screenshot of Leaf app after running](./assets/progress.png)
 
+*Screenshot: The app running with default welcome page*
