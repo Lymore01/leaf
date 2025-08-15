@@ -26,20 +26,22 @@ export function renderElementNode(vElementNode: ElementVNode): HTMLElement {
         el.addEventListener(eventName, value);
         vElementNode.attachedListeners?.set(eventName, value);
       }
+    } else if (key === "style") {
+      const styleValue = vElementNode.props.style;
+      if (typeof styleValue === "string") {
+        el.setAttribute("style", styleValue);
+      } else if (typeof styleValue === "object" && styleValue !== null) {
+        for (const [styleProp, styleVal] of Object.entries(styleValue)) {
+          // @ts-ignore - allow dynamic styles
+          el.style[styleProp] = styleVal;
+        }
+      }
+    } else if (key === "tw" || key === "className" || key === "class") {
+      el.setAttribute("class", value);
     } else {
       el.setAttribute(key, value);
     }
   }
-
-  /*   for (const child of vElementNode.children) {
-    if (typeof child === "string") {
-      const textNode = new TextVNode(child);
-      el.appendChild(textNode.mount());
-      vElementNode.children.push(textNode);
-    } else if (child instanceof VNodeBase) {
-      el.appendChild(child.mount());
-    }
-  } */
 
   for (const child of vElementNode.children) {
     el.appendChild(child.mount());

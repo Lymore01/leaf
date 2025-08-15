@@ -10,7 +10,7 @@ export function prepareHooksForRender() {
   currentHookIndex = 0;
 }
 
-export function useState<T>(
+export function seed<T>(
   initialValue: T
 ): [T, (value: T | ((prev: T) => T)) => void] {
   const hookIndex = currentHookIndex;
@@ -27,7 +27,9 @@ export function useState<T>(
         : value;
 
     currentHooks[hookIndex] = nextValue;
-    scheduleUpdate(rerender);
+    //! fix: scheduleUpdate causes bugs
+    // scheduleUpdate(rerender);
+    rerender()
   };
 
   const state = currentHooks[hookIndex];
@@ -49,7 +51,7 @@ export function useMemo<T>(factory: () => T): T {
   return value;
 }
 
-export function useEffect(effect: EffectFn, deps?: unknown[]) {
+export function watch(effect: EffectFn, deps?: unknown[]) {
   const hookIndex = currentHookIndex;
 
   const prevCleanup = currentHooks[hookIndex]?.cleanup;

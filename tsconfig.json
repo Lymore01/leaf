@@ -2,8 +2,7 @@
   "include": ["src", "global.d.ts"],
   "exclude": ["node_modules", ".leaf", "tests"],
   "compilerOptions": {
-    "jsx": "react",
-    "jsxFactory": "h",
+    
     "declaration": true,
     "declarationMap": true,
     "module": "ESNext",         
@@ -18,8 +17,9 @@
     "moduleResolution": "bundler",
 
     "forceConsistentCasingInFileNames": true,
-    "stripInternal": true
+    "stripInternal": true,
 
-    
+    "jsx": "react",
+    "jsxFactory": "h"
   }
 }

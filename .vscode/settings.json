@@ -1,0 +1,40 @@
+{
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.includePackageJsonAutoImports": "off",
+  
+  // Tailwind CSS configuration
+  "tailwindCSS.includeLanguages": {
+    "typescript": "typescript",
+    "javascript": "javascript",
+    "typescriptreact": "typescriptreact",
+    "javascriptreact": "javascriptreact"
+  },
+  
+  "tailwindCSS.experimental.classRegex": [
+    ["tw[\\s]*=[\\s]*[\"']([^\"']*)[\"']", "$1"],
+    ["tw[\\s]*=[\\s]*{[\"'`]([^\"'`]*)[\"'`]}", "$1"],
+    ["className[\\s]*=[\\s]*[\"']([^\"']*)[\"']", "$1"],
+    ["class[\\s]*=[\\s]*[\"']([^\"']*)[\"']", "$1"]
+  ],
+  
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className", 
+    "tw"
+  ],
+  
+  // File associations
+  "files.associations": {
+    "*.tsx": "typescriptreact",
+    "*.jsx": "javascriptreact"
+  },
+  
+  // Emmet configuration
+  "emmet.includeLanguages": {
+    "typescript": "jsx",
+    "javascript": "jsx"
+  },
+  
+  "emmet.triggerExpansionOnTab": true,
+  "emmet.showExpandedAbbreviation": "always"
+}
