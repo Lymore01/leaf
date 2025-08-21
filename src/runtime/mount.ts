@@ -9,12 +9,17 @@ import {
 } from "../core/hooks/hook.js";
 
 let rootVNode: VNodeBase | null = null;
+let currentComponent: () => VNodeBase;
+let containerRef: HTMLElement;
 
 export function mount_(component: () => VNodeBase, container: HTMLElement) {
+  currentComponent = component;
+  containerRef = container;
+
   const rerenderFn = () => {
     prepareHooksForRender();
 
-    const newVNode = component();
+    const newVNode = currentComponent();
 
     if (!rootVNode) {
       const dom = newVNode.mount();
@@ -24,11 +29,18 @@ export function mount_(component: () => VNodeBase, container: HTMLElement) {
       const patch = diff(rootVNode, newVNode);
       applyPatch(rootVNode, patch);
     }
-    
+
     flushPostRenderEffects();
   };
 
   setRerenderFn(rerenderFn);
-
   effect(rerenderFn);
+}
+
+export function remount_(newComponent: () => VNodeBase) {
+  // console.log("[DEBUG]: Remounting...")
+  currentComponent = newComponent;
+  rootVNode = null;
+  containerRef.innerHTML = "";
+  mount_(currentComponent, containerRef);
 }

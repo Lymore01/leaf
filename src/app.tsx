@@ -15,9 +15,6 @@ export const App = () => {
       }}
     >
       <header tw="text-center max-w-2xl space-y-6 px-6 pointer-events-auto">
-        <p tw="text-2xl font-semibold tracking-wide px-1 rounded text-green-400">
-          {count}
-        </p>
 
         <div tw="text-6xl mb-2">🌿</div>
 
@@ -42,7 +39,7 @@ export const App = () => {
             onClick={() => setCount(count + 1)}
             tw="text-sm cursor-pointer px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-lg shadow-lg hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50 transition duration-300 ease-in-out"
           >
-            Click
+            Click: {"  "} {count}
           </button>
 
           <button

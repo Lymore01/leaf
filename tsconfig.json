@@ -1,5 +1,5 @@
 {
-  "include": ["src", "global.d.ts"],
+  "include": ["src", "global.d.ts", "vite-env.d.ts"],
   "exclude": ["node_modules", ".leaf", "tests"],
   "compilerOptions": {
     
@@ -10,6 +10,8 @@
     "outDir": ".leaf/main",
     "rootDir": "src",
     "sourceMap": true,
+
+    "types": ["vite/client"],
 
     "strict": true,
     "esModuleInterop": true,
