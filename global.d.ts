@@ -2,6 +2,7 @@ export {};
 
 declare namespace JSX {
   interface IntrinsicElements {
+    Fragment: {};
     [elemName: string]: {
       [key: string]: any;
       tw?: string;
@@ -32,6 +33,7 @@ declare namespace JSX {
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      Fragment: {};
       [elemName: string]: {
         [key: string]: any;
         tw?: string;

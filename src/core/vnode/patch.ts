@@ -29,7 +29,6 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
           `Patching TextVNode #${oldVNode.id} from "${oldVNode.text}" to "${patch.newText}"`
         );
         oldVNode.dom.textContent = patch.newText;
-        oldVNode.dom.textContent = patch.newText;
         oldVNode.text = patch.newText;
       }
       break;

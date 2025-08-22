@@ -27,6 +27,7 @@ export function seed<T>(
         : value;
 
     currentHooks[hookIndex] = nextValue;
+    
     //! fix: scheduleUpdate causes bugs
     // scheduleUpdate(rerender);
     rerender()

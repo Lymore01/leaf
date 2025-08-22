@@ -24,3 +24,20 @@ export const App = () => {
   return h("div", {}, [`Count: ${count}`]);
 };
  */
+
+import { JSDOM } from "jsdom"
+import { h } from "../src/jsx/h";
+import { VNodeBase } from "../src/core/vnode/VNodeBase";
+import { diff } from "../src/core/diffing/diff";
+// fix patching issues for text node
+
+const document = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+const { body } = document.window.document
+
+const oldNode = h("div", null, ["hello, world"])
+
+const newVNode = h('div', null, 'Hello, Leaf!');
+
+const patch = diff(oldNode, newVNode);
+
+console.log("Patch: ", patch)

@@ -27,7 +27,7 @@ function normalizeChildren(children: any): VNodeBase[] {
 }
 
 export function h(
-  tag: string | Symbol,
+  tag: string | Symbol | Function,
   props: any = {},
   ...children: any[]
 ) {
@@ -36,6 +36,12 @@ export function h(
 
   if (tag === Fragment) {
     return new FragmentNode(normalizeChildren(children));
+  }
+
+  // functional components
+  if(typeof tag === "function"){
+    const componentVNode = tag(rest);
+    return componentVNode
   }
   
   const vNode = new ElementVNode({
