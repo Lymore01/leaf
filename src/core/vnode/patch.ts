@@ -1,3 +1,4 @@
+import { testClickEvent } from "../../utils/dom.js";
 import { diff } from "../diffing/diff.js";
 import { ElementVNode } from "./ElementVNode.js";
 import { TextVNode } from "./TextVNode.js";
@@ -25,11 +26,13 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
 
     case "TEXT": {
       if (oldVNode instanceof TextVNode && oldVNode.dom) {
-        console.log(
-          `Patching TextVNode #${oldVNode.id} from "${oldVNode.text}" to "${patch.newText}"`
-        );
-        oldVNode.dom.textContent = patch.newText;
-        oldVNode.text = patch.newText;
+        if (oldVNode.text !== patch.newText) {
+          console.log(
+            `Patching TextVNode #${oldVNode.id} from "${oldVNode.text}" to "${patch.newText}"`
+          );
+          oldVNode.text = patch.newText;
+          oldVNode.dom.textContent = patch.newText;
+        }
       }
       break;
     }
@@ -73,7 +76,7 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
       if (oldVNode instanceof ElementVNode && oldVNode.dom) {
         const el = oldVNode.dom;
 
-        // update props
+        // remove old props
         for (const key of patch.propsToRemove) {
           if (key.startsWith("on")) {
             const eventName = key.slice(2).toLowerCase();
@@ -92,11 +95,13 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
           if (key.startsWith("on") && typeof value === "function") {
             const eventName = key.slice(2).toLowerCase();
 
-            const oldHandler = oldVNode.props[key];
-            if (typeof oldHandler === "function") {
-              el.removeEventListener(eventName, oldHandler);
+            const prevHandler = oldVNode.attachedListeners?.get(eventName);
+
+            if (typeof prevHandler === "function") {
+              el.removeEventListener(eventName, prevHandler);
               oldVNode.attachedListeners?.delete(eventName);
             }
+
             el.addEventListener(eventName, value);
             oldVNode.attachedListeners?.set(eventName, value);
           } else {

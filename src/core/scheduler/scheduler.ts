@@ -1,18 +1,20 @@
 // groups multiple updates into one render cycle / tick
-const updateQueue = new Set<() => void>();
-let isFlushing = false;
+
+let isScheduled = false;
+let scheduledRenderFn: (() => void) | null = null;
 
 export function scheduleUpdate(fn: () => void) {
-  updateQueue.add(fn);
+  scheduledRenderFn = fn;
 
-  if (!isFlushing) {
-    isFlushing = true;
+  if (!isScheduled) {
+    isScheduled = true;
 
-    // microtask
-    Promise.resolve().then(() => {
-      updateQueue.forEach((fn) => fn());
-      updateQueue.clear();
-      isFlushing = false;
+    queueMicrotask(() => {
+      if (scheduledRenderFn) {
+        scheduledRenderFn();
+      }
+      isScheduled = false;
+      scheduledRenderFn = null;
     });
   }
 }

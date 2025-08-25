@@ -29,6 +29,7 @@ export function diff(
   }
 
   if (oldVNode instanceof TextVNode && newVNode instanceof TextVNode) {
+    // console.log(`Diffing TextVNode: old="${oldVNode.text}", new="${newVNode.text}"`);
     if (oldVNode.text !== newVNode.text) {
       return { type: "TEXT", newText: newVNode.text };
     }
@@ -63,6 +64,7 @@ export function diff(
     if (noPropsChanges && noChildrenChanges) {
       return null;
     }
+    
 
     return {
       type: "UPDATE_CHILDREN",

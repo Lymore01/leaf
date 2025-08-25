@@ -22,10 +22,11 @@ export class TextVNode extends VNodeBase {
   }
 
   patch(newNode: TextVNode): void {
-    const patch = diff(this, newNode);
-    applyPatch(this, patch);
-
-    this.text = newNode.text;
+    if (this.text !== newNode.text) {
+      const patch = diff(this, newNode);
+      applyPatch(this, patch);
+      this.text = newNode.text;
+    }
   }
 
   unmount(): void {

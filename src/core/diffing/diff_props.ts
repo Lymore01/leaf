@@ -1,13 +1,28 @@
 export function diffProps(
   oldProps: Record<string, any>,
   newProps: Record<string, any>
-): { toUpdate: Record<string, any>; toRemove: string[] } {
+): {
+  toUpdate: Record<string, any>;
+  toRemove: string[];
+} {
   const toUpdate: Record<string, any> = {};
   const toRemove: string[] = [];
 
   for (const key in newProps) {
-    if (oldProps[key] !== newProps[key]) {
-      toUpdate[key] = newProps[key];
+    const oldVal = oldProps[key];
+    const newVal = newProps[key];
+
+    const isEvent = key.startsWith("on") && typeof newVal === "function";
+
+    
+    if (isEvent) {
+      if (oldVal !== newVal) {
+        toUpdate[key] = newVal;
+      }
+    } else {
+      if (oldVal !== newVal) {
+        toUpdate[key] = newVal;
+      }
     }
   }
 

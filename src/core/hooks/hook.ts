@@ -16,28 +16,32 @@ export function seed<T>(
   const hookIndex = currentHookIndex;
 
   if (currentHooks.length <= hookIndex) {
-    currentHooks[hookIndex] = initialValue;
+    
+    // avoid closure staleness
+    const state: { value: T } = { value: initialValue };
+
+    const setState = (value: T | ((prev: T) => T)) => {
+      const currentValue = state.value;
+      const nextValue =
+        typeof value === "function"
+          ? (value as (prev: T) => T)(currentValue)
+          : value;
+
+      if (currentValue !== nextValue) {
+        state.value = nextValue;
+        scheduleUpdate(rerender);
+      }
+    };
+
+    currentHooks[hookIndex] = [state, setState];
   }
 
-  const setState = (value: T | ((prev: T) => T)) => {
-    const prevValue = currentHooks[hookIndex];
-    const nextValue =
-      typeof value === "function"
-        ? (value as (prev: T) => T)(prevValue)
-        : value;
+  const [state, setState] = currentHooks[hookIndex];
+  currentHookIndex++; // for the next hook
 
-    currentHooks[hookIndex] = nextValue;
-    
-    //! fix: scheduleUpdate causes bugs
-    // scheduleUpdate(rerender);
-    rerender()
-  };
-
-  const state = currentHooks[hookIndex];
-  currentHookIndex++;
-
-  return [state, setState];
+  return [state.value, setState];
 }
+
 
 export function useMemo<T>(factory: () => T): T {
   const hookIndex = currentHookIndex;

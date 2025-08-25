@@ -1,6 +1,6 @@
 import { diff } from "../core/diffing/diff.js";
 import { applyPatch } from "../core/vnode/patch.js";
-import { effect } from "../core/reactive/reactive.js";
+// import { effect } from "../core/reactive/reactive.js";
 import { VNodeBase } from "../core/vnode/VNodeBase.js";
 import {
   flushPostRenderEffects,
@@ -17,6 +17,7 @@ export function mount_(component: () => VNodeBase, container: HTMLElement) {
   containerRef = container;
 
   const rerenderFn = () => {
+    // console.log("[DEBUG]: Starting rerender...");
     prepareHooksForRender();
 
     const newVNode = currentComponent();
@@ -34,11 +35,12 @@ export function mount_(component: () => VNodeBase, container: HTMLElement) {
   };
 
   setRerenderFn(rerenderFn);
-  effect(rerenderFn);
+  
+  rerenderFn();
+  // effect(rerenderFn);
 }
 
 export function remount_(newComponent: () => VNodeBase) {
-  // console.log("[DEBUG]: Remounting...")
   currentComponent = newComponent;
   rootVNode = null;
   containerRef.innerHTML = "";
