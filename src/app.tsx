@@ -1,6 +1,7 @@
 import { h } from "./jsx/h.js";
 import { seed } from "./core/hooks/hook.js";
-import { Foo } from "./examples/components/foo.js";
+import viteLogo from "/vite.svg";
+import leafLogo from "/leaf.svg";
 
 export const App = () => {
   const [count, setCount] = seed<number>(0);
@@ -16,16 +17,29 @@ export const App = () => {
       }}
     >
       <header tw="text-center max-w-2xl space-y-6 px-6 pointer-events-auto">
-        <div tw="text-6xl mb-2">🌿</div>
+        <div tw="flex justify-center items-center gap-8">
+          <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+            <img
+              src={viteLogo}
+              alt="Vite logo"
+              tw="h-24 transition hover:drop-shadow-[0_0_2em_#646cffaa]"
+            />
+          </a>
+          <a href="https://leafjs.dev" target="_blank" rel="noreferrer">
+            <img
+              src={leafLogo}
+              alt="Leaf logo"
+              tw="h-24 transition hover:drop-shadow-[0_0_2em_#00c37a]"
+            />
+          </a>
+        </div>
 
-        <Foo message="hello from foo!" />
-
-        <h1 tw="text-green-400 font-extrabold text-2xl sm:text-5xl tracking-tight leading-tight">
-          Welcome to Leaf
+        <h1 tw="text-green-400 font-extrabold text-2xl sm:text-4xl tracking-tight leading-tight">
+          Vite + Leaf
         </h1>
 
         <p tw="text-gray-400 text-md sm:text-lg max-w-xl mx-auto leading-relaxed">
-          A tiny, snappy JavaScript framework for building reactive UIs.
+          A lightweight JavaScript framework for building fast, reactive UI.
         </p>
 
         <p tw="text-gray-400 text-md sm:text-lg max-w-xl mx-auto leading-relaxed">
@@ -39,7 +53,7 @@ export const App = () => {
             onClick={() => {
               setCount((prevCount) => prevCount + 1);
             }}
-            tw="text-sm cursor-pointer px-8 py-3 bg-gradient-to-r from-emerald-500 to-green-600 text-white font-semibold rounded-lg shadow-lg hover:from-emerald-600 hover:to-green-700 focus:outline-none focus:ring-4 focus:ring-green-400 focus:ring-opacity-50 transition duration-300 ease-in-out"
+            tw="text-sm cursor-pointer px-8 py-3 text-white font-semibold rounded-lg shadow-lg focus:outline-none  transition duration-300 ease-in-out"
           >
             Click: {"  "} {count}
           </button>

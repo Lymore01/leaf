@@ -4,6 +4,6 @@
 Inspired by Reactivity and JSX, but built your way.
 
 <!-- Screenshot of the app after running -->
-![Screenshot of Leaf app after running](./assets/progress.png)
+![Screenshot of Leaf app after running](./assets/progress2.png)
 
 *Screenshot: The app running with default welcome page*
