@@ -26,6 +26,7 @@ export function mount_(component: () => VNodeBase, container: HTMLElement) {
       const dom = newVNode.mount();
       container.appendChild(dom);
       rootVNode = newVNode;
+
     } else {
       const patch = diff(rootVNode, newVNode);
       applyPatch(rootVNode, patch);

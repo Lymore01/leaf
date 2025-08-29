@@ -1,76 +1,16 @@
+import { Foo } from "./examples/components/foo.js";
+import { NotFound } from "./examples/components/not-found.js";
+import { Welcome } from "./examples/components/welcome.js";
 import { h } from "./jsx/h.js";
-import { seed } from "./core/hooks/hook.js";
-import viteLogo from "/vite.svg";
-import leafLogo from "/leaf.svg";
+import { Route } from "./packages/leaf-router/src/components/Route.js";
+import { Routes } from "./packages/leaf-router/src/components/Routes.js";
 
 export const App = () => {
-  const [count, setCount] = seed<number>(0);
   return (
-    <div
-      tw="min-h-screen bg-black text-white flex flex-col justify-center items-center relative z-0 pointer-events-none"
-      style={{
-        backgroundImage: `
-      radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
-        backgroundSize: "40px 40px",
-        backgroundPosition: "0 0, 20px 20px",
-      }}
-    >
-      <header tw="text-center max-w-2xl space-y-6 px-6 pointer-events-auto">
-        <div tw="flex justify-center items-center gap-8">
-          <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-            <img
-              src={viteLogo}
-              alt="Vite logo"
-              tw="h-24 transition hover:drop-shadow-[0_0_2em_#646cffaa]"
-            />
-          </a>
-          <a href="https://leafjs.dev" target="_blank" rel="noreferrer">
-            <img
-              src={leafLogo}
-              alt="Leaf logo"
-              tw="h-24 transition hover:drop-shadow-[0_0_2em_#00c37a]"
-            />
-          </a>
-        </div>
-
-        <h1 tw="text-green-400 font-extrabold text-2xl sm:text-4xl tracking-tight leading-tight">
-          Vite + Leaf
-        </h1>
-
-        <p tw="text-gray-400 text-md sm:text-lg max-w-xl mx-auto leading-relaxed">
-          A lightweight JavaScript framework for building fast, reactive UI.
-        </p>
-
-        <p tw="text-gray-400 text-md sm:text-lg max-w-xl mx-auto leading-relaxed">
-          Edit{" "}
-          <code tw="bg-gray-800 px-1 rounded text-green-400">src/app.tsx</code>{" "}
-          file and save to reload.
-        </p>
-
-        <div tw="flex justify-center gap-6 mt-8">
-          <button
-            onClick={() => {
-              setCount((prevCount) => prevCount + 1);
-            }}
-            tw="text-sm cursor-pointer px-8 py-3 text-white font-semibold rounded-lg shadow-lg focus:outline-none  transition duration-300 ease-in-out"
-          >
-            Click: {"  "} {count}
-          </button>
-
-          <button
-            onClick={() => window.open("https://leafjs.org/docs", "_blank")}
-            tw="text-sm cursor-pointer px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-green-200 font-semibold rounded-lg shadow-md hover:from-green-800 hover:to-green-950 focus:outline-none focus:ring-4 focus:ring-green-600 focus:ring-opacity-50 transition duration-300 ease-in-out
-  "
-          >
-            API Docs
-          </button>
-        </div>
-      </header>
-
-      <footer tw="pointer-events-auto fixed bottom-4 left-4 text-green-400 text-sm font-medium tracking-wide select-none flex items-center gap-1 font-mono">
-        Built with <span tw="text-green-400">❤️</span> by Kelly Limo.
-      </footer>
-    </div>
+    <Routes>
+      <Route path="/" element={<Welcome />} />
+      <Route path="/hello" element={<Foo message="Hello world" />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };

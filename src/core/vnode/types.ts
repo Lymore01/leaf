@@ -6,6 +6,26 @@ export type ElementVNodeProps = {
   children: VNodeBase[] | [];
 };
 
+export type LeafNode =
+  | VNodeBase
+  | HTMLElement
+  | Text
+  | Comment
+  | DocumentFragment
+  | LeafNode[]
+  | string
+  | number
+  | boolean
+  | null
+  | undefined;
+
+export type PropsWithChildren<P = {}> = P & { children?: LeafNode | null };
+
+export type RouteProps = {
+  path: string;
+  element: LeafNode;
+}
+
 export type TextVNodeProps = {
   text: string;
 };
