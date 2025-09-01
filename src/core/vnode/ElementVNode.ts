@@ -43,7 +43,7 @@ export class ElementVNode extends VNodeBase {
   }
 
   mount(): HTMLElement {
-  const el = renderElementNode(this);
+    const el = renderElementNode(this);
 
     this.callHook("onMount");
 

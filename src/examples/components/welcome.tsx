@@ -2,19 +2,18 @@ import { h } from "../../jsx/h";
 import { seed } from "../../core/hooks/hook";
 import viteLogo from "/vite.svg";
 import leafLogo from "/leaf.svg";
+import { Link } from "../../packages/leaf-router/src";
+import { currentPath } from "../../packages/leaf-router/src/core/router-state";
+
+//! FIX: writing styles as objects causes issues with the tw macro, use string styles instead
+//! FIX: the outer div function is still available on different pages, causing the page ui to overlap
 
 export const Welcome = () => {
   const [count, setCount] = seed<number>(0);
   return (
     <div
       tw="min-h-screen bg-black text-white flex flex-col justify-center items-center relative z-0 pointer-events-none"
-      style={{
-        backgroundImage: `
-      radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-      radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px)`,
-        backgroundSize: "40px 40px",
-        backgroundPosition: "0 0, 20px 20px",
-      }}
+      style="background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px), radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px); background-size: 40px 40px; background-position: 0px 0px, 20px 20px;"
     >
       <header tw="text-center max-w-2xl space-y-6 px-6 pointer-events-auto">
         <div tw="flex justify-center items-center gap-8">
@@ -56,12 +55,18 @@ export const Welcome = () => {
           </button>
 
           <button
-            onClick={() => window.open("https://leafjs.org/docs", "_blank")}
+            onClick={() => {
+              console.log(
+                "Current Path from reactive state:",
+                currentPath.value
+              );
+            }}
             tw="text-sm cursor-pointer px-8 py-3 bg-gradient-to-r from-green-700 to-green-900 text-green-200 font-semibold rounded-lg shadow-md hover:from-green-800 hover:to-green-950 focus:outline-none focus:ring-4 focus:ring-green-600 focus:ring-opacity-50 transition duration-300 ease-in-out
   "
           >
             API Docs
           </button>
+          <Link to="/hello">Greet me</Link>
         </div>
       </header>
 

@@ -4,6 +4,8 @@ import { TextVNode } from "./TextVNode.js";
 import { LifecycleHookName } from "./types.js";
 import { VNodeBase } from "./VNodeBase.js";
 
+
+// todo: Fix me 
 const hookKeys: LifecycleHookName[] = ["onMount", "onUnmount", "onUpdate"];
 
 export function renderElementNode(vElementNode: ElementVNode): HTMLElement {

@@ -21,10 +21,14 @@ export type LeafNode =
 
 export type PropsWithChildren<P = {}> = P & { children?: LeafNode | null };
 
+export type LinkProps = PropsWithChildren<{
+  to: string;
+}>;
+
 export type RouteProps = {
   path: string;
   element: LeafNode;
-}
+};
 
 export type TextVNodeProps = {
   text: string;

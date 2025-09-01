@@ -1,20 +1,17 @@
-import { sampleRouters } from "../shared/constants";
+import { VNodeBase } from "../../../../core/vnode/VNodeBase";
 
-// get the current path
-export function getCurrentPath() {
-  return window.location.pathname;
-}
+type MountFn = (component: () => VNodeBase, root: HTMLElement) => void;
 
-// navigate to the new path
-export function navigateTo(path: string) {
-  // get the component from the path
-  sampleRouters.hasOwnProperty(path)
-    ? window.history.pushState({}, "", path)
-    : window.history.pushState({}, "", "*");
+export function createRouter(
+  app: any,
+  root: HTMLElement,
+  mount: MountFn,
+  remount: (component: () => VNodeBase) => void
+) {
+  mount(app, root);
 
-    // dispatch the event to notify the router
-    const navEvent = new PopStateEvent("popstate");
-    window.dispatchEvent(navEvent);
-
-    return;
+  window.addEventListener("popstate", () => {
+    console.log("[Router] Detected popstate event, remounting App...");
+    remount(app);
+  });
 }

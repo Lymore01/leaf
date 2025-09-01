@@ -39,7 +39,6 @@ export function h(
     return new FragmentNode(normalizeChildren(children));
   }
 
-  // functional components
   if (typeof tag === "function") {
     if (children.length > 0) {
       rest.children = normalizeChildren(children);
@@ -50,9 +49,6 @@ export function h(
     if (key !== undefined) {
       (componentVNode as ElementVNode).key = key;
     }
-
-    // console.log("[DEBUG]: componentVNode", rest.children, componentVNode);
-
     return componentVNode;
   }
 

@@ -7,17 +7,17 @@ import {
   prepareHooksForRender,
   setRerenderFn,
 } from "../core/hooks/hook.js";
+import { effect } from "../core/reactive/reactive.js";
 
 let rootVNode: VNodeBase | null = null;
 let currentComponent: () => VNodeBase;
 let containerRef: HTMLElement;
 
-export function mount_(component: () => VNodeBase, container: HTMLElement) {
+export function _mount(component: () => VNodeBase, container: HTMLElement) {
   currentComponent = component;
   containerRef = container;
 
   const rerenderFn = () => {
-    // console.log("[DEBUG]: Starting rerender...");
     prepareHooksForRender();
 
     const newVNode = currentComponent();
@@ -37,13 +37,14 @@ export function mount_(component: () => VNodeBase, container: HTMLElement) {
 
   setRerenderFn(rerenderFn);
   
-  rerenderFn();
-  // effect(rerenderFn);
+  // rerenderFn();
+  effect(rerenderFn);
 }
 
-export function remount_(newComponent: () => VNodeBase) {
+export function _remount(newComponent: () => VNodeBase) {
   currentComponent = newComponent;
   rootVNode = null;
   containerRef.innerHTML = "";
-  mount_(currentComponent, containerRef);
+  
+  _mount(currentComponent, containerRef);
 }

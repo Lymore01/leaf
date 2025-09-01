@@ -1,5 +1,5 @@
 // for router lookup
-
+// todo: clean up later
 interface SampleRoutes {
     [key: string]: string;
 }
