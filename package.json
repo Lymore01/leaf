@@ -3,13 +3,15 @@
   "version": "1.0.0",
   "description": "leaf/",
   "main": ".leaf/main/index.js",
+  "private": true,
   "scripts": {
     "dev": "vite",
     "build:app": "tsc -p tsconfig.json",
     "build:tw": "pnpm exec tailwindcss-cli -i ./src/app.css -o ./.leaf/output.css --watch",
     "build": "run-s build:app build:tw",
     "clean": "rimraf .leaf",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:tsconfig": "ts-node scripts/check-tsconfig-composite.ts"
   },
   "keywords": [],
   "author": "",

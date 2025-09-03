@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": ".leaf/main",
+    "baseUrl": "src",
+    "paths": {
+      "@plugins/*": ["../../plugins/src/*"]
+    }
+  },
+  "include": ["src", "global.d.ts", "vite-env.d.ts"],
+  "exclude": ["node_modules", ".leaf", "tests"]
+}

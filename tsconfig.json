@@ -1,27 +1,27 @@
 {
-  "include": ["src", "global.d.ts", "vite-env.d.ts"],
-  "exclude": ["node_modules", ".leaf", "tests"],
+  "files": [],
+  "references": [
+    { "path": "packages/jsx" },
+    { "path": "packages/router" },
+    { "path": "apps/demo" },
+    { "path": "packages/core" }
+  ],
   "compilerOptions": {
-    
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "module": "ESNext",         
+    "module": "ESNext",
     "target": "ES2020",
-    "outDir": ".leaf/main",
-    "rootDir": "src",
+    "moduleResolution": "bundler",
     "sourceMap": true,
-
-    "types": ["vite/client"],
-
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "bundler",
-
     "forceConsistentCasingInFileNames": true,
     "stripInternal": true,
-
-    "jsx": "react",
-    "jsxFactory": "h"
+    "jsx": "react-jsx",
+    "jsxImportSource": "@leaf/jsx",
+    "types": ["vite/client"],
+    "baseUrl": "."
   }
 }

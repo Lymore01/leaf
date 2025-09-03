@@ -1,0 +1,20 @@
+{
+  "name": "@leaf/runtime",
+  "description": "Runtime utilities for Leaf projects",
+  "keywords": [
+    "leaf",
+    "runtime",
+    "typescript"
+  ],
+  "version": "0.1.0",
+  "main": ".leaf/main/index.js",
+  "types": ".leaf/main/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "vite",
+    "lint": "eslint src --ext .ts,.tsx"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

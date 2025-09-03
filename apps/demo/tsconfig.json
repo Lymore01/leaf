@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../.leaf/demo",
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@jsx": ["../../packages/jsx/src/index.ts"],
+      "@router": ["../../packages/router/src/index.ts"],
+    }
+  },
+  "include": ["app.tsx", "vite-env.d.ts"],
+  "references": [
+    { "path": "../../packages/jsx" },
+    { "path": "../../packages/router" }
+  ]
+}
