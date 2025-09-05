@@ -1,5 +1,5 @@
-import { h } from "@jsx";
-import { Link } from "@router";
+// import "@leaf/types" - another way to define global types
+import { Link } from '@router';
 
 export const Foo = (props: { message: string }) => {
   return (

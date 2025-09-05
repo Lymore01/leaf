@@ -1,12 +1,11 @@
-import { ElementVNode } from "./ElementVNode.js";
-import { FragmentNode } from "./FragmentNode.js";
-import { TextVNode } from "./TextVNode.js";
-import { LifecycleHookName } from "./types.js";
-import { VNodeBase } from "./VNodeBase.js";
+import { ElementVNode } from './ElementVNode.js';
+import { FragmentNode } from './FragmentNode.js';
+import { TextVNode } from './TextVNode.js';
+import { LifecycleHookName } from '../../../shared/types/types.js';
+import { VNodeBase } from './VNodeBase.js';
 
-
-// todo: Fix me 
-const hookKeys: LifecycleHookName[] = ["onMount", "onUnmount", "onUpdate"];
+// todo: Fix me
+const hookKeys: LifecycleHookName[] = ['onMount', 'onUnmount', 'onUpdate'];
 
 export function renderElementNode(vElementNode: ElementVNode): HTMLElement {
   const el = document.createElement(vElementNode.type);
@@ -20,7 +19,7 @@ export function renderElementNode(vElementNode: ElementVNode): HTMLElement {
   }
 
   for (const [key, value] of Object.entries(vElementNode.props)) {
-    if (key.startsWith("on") && typeof value === "function") {
+    if (key.startsWith('on') && typeof value === 'function') {
       if (hookKeys.includes(key as LifecycleHookName)) {
         vElementNode.hooks.set(key as LifecycleHookName, value);
       } else {
@@ -28,18 +27,18 @@ export function renderElementNode(vElementNode: ElementVNode): HTMLElement {
         el.addEventListener(eventName, value);
         vElementNode.attachedListeners?.set(eventName, value);
       }
-    } else if (key === "style") {
+    } else if (key === 'style') {
       const styleValue = vElementNode.props.style;
-      if (typeof styleValue === "string") {
-        el.setAttribute("style", styleValue);
-      } else if (typeof styleValue === "object" && styleValue !== null) {
+      if (typeof styleValue === 'string') {
+        el.setAttribute('style', styleValue);
+      } else if (typeof styleValue === 'object' && styleValue !== null) {
         for (const [styleProp, styleVal] of Object.entries(styleValue)) {
           // @ts-ignore - allow dynamic styles
           el.style[styleProp] = styleVal;
         }
       }
-    } else if (key === "tw" || key === "className" || key === "class") {
-      el.setAttribute("class", value);
+    } else if (key === 'tw' || key === 'className' || key === 'class') {
+      el.setAttribute('class', value);
     } else {
       el.setAttribute(key, value);
     }

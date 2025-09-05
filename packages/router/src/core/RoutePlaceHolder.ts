@@ -1,5 +1,5 @@
-import { RouteProps } from "../../../../core/vnode/types";
-import { VNodeBase } from "../../../../core/vnode/VNodeBase";
+import { RouteProps } from '@shared/types';
+import { VNodeBase } from '@core';
 
 export class RoutePlaceholder extends VNodeBase {
   readonly routeProps: RouteProps;
@@ -10,7 +10,7 @@ export class RoutePlaceholder extends VNodeBase {
   }
 
   mount(): Node {
-    return document.createComment("RoutePlaceholder");
+    return document.createComment('RoutePlaceholder');
   }
 
   patch(next: VNodeBase): void {}

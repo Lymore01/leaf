@@ -4,6 +4,8 @@
   "version": "1.0.0",
   "main": "src/global.d.ts",
   "types": "src/global.d.ts",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "private": true
 }

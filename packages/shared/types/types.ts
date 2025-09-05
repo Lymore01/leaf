@@ -1,4 +1,4 @@
-import { VNodeBase } from "./VNodeBase.js";
+import { VNodeBase } from '../../core/src/vnode/VNodeBase.js';
 
 export type ElementVNodeProps = {
   type: string;
@@ -46,32 +46,32 @@ export type LifecycleHookFn = {
 export type LifecycleHookName = keyof LifecycleHookFn;
 
 export type Patch =
-  | { type: "REPLACE"; newVNode: VNodeBase }
-  | { type: "REMOVE" }
-  | { type: "TEXT"; newText: string }
+  | { type: 'REPLACE'; newVNode: VNodeBase }
+  | { type: 'REMOVE' }
+  | { type: 'TEXT'; newText: string }
   | {
-      type: "UPDATE_CHILDREN";
+      type: 'UPDATE_CHILDREN';
       propsToUpdate: Record<string, any>;
       propsToRemove: string[];
       childrenPatches: Array<Patch | null>;
     }
   | {
-      type: "KEYED_UPDATE_CHILDREN";
+      type: 'KEYED_UPDATE_CHILDREN';
       keyedPatches: KeyedChildPatch[];
     };
 
 export type KeyedChildPatch =
   | {
-      type: "INSERT";
+      type: 'INSERT';
       index: number;
       newVNode: VNodeBase;
     }
   | {
-      type: "REMOVE";
+      type: 'REMOVE';
       oldVNode: VNodeBase;
     }
   | {
-      type: "PATCH";
+      type: 'PATCH';
       index: number;
       oldVNode: VNodeBase;
       newVNode: VNodeBase;

@@ -1,8 +1,8 @@
 export const detectPageReload = () => {
-  const entry = performance.getEntriesByType("navigation")[0] as
+  const entry = performance.getEntriesByType('navigation')[0] as
     | PerformanceNavigationTiming
     | undefined;
-  return entry?.type === "reload";
+  return entry?.type === 'reload';
 };
 
 // usage

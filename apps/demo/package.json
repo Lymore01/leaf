@@ -4,14 +4,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
     "dev": "vite",
-    "lint": "eslint src --ext .ts,.tsx"
+    "build:tw": "pnpm exec tailwindcss-cli -i ./src/app.css -o ./.leaf/output.css --watch",
+    "build:app": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@leaf/types": "workspace:*"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.2"
   }
 }

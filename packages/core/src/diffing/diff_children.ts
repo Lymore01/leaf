@@ -1,8 +1,7 @@
-import { wrapText } from "../../utils/wrap_text.js";
-import { Patch } from "../vnode/types.js";
-import { VNodeBase } from "../vnode/VNodeBase.js";
-import { diff } from "./diff.js";
-
+import { wrapText } from '@shared/utils';
+import { Patch } from '../../../shared/types/types.js';
+import { VNodeBase } from '../vnode/VNodeBase.js';
+import { diff } from './diff.js';
 
 // using indexes
 export function diffChildren(

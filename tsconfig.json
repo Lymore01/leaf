@@ -4,7 +4,8 @@
     { "path": "packages/jsx" },
     { "path": "packages/router" },
     { "path": "apps/demo" },
-    { "path": "packages/core" }
+    { "path": "packages/core" },
+    { "path": "packages/runtime" }
   ],
   "compilerOptions": {
     "composite": true,
@@ -22,6 +23,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "@leaf/jsx",
     "types": ["vite/client"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@leaf/jsx": ["packages/jsx/src/index.ts"],
+      "@jsx/jsx-dev-runtime": ["packages/jsx/src/jsx-runtime.ts"],
+      "@jsx/jsx-runtime": ["packages/jsx/src/jsx-runtime.ts"]
+    }
   }
 }

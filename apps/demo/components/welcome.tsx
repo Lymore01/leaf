@@ -1,9 +1,8 @@
-import { h } from "@jsx";
-import { seed } from "../../core/hooks/hook";
-import viteLogo from "/vite.svg";
-import leafLogo from "/leaf.svg";
-import { Link } from "../../packages/leaf-router/src";
-import { currentPath } from "../../packages/leaf-router/src/core/router-state";
+import { seed } from '@core';
+import viteLogo from '/vite.svg';
+import leafLogo from '/leaf.svg';
+import { Link } from '@router';
+import { currentPath } from '@router';
 
 //! FIX: writing styles as objects causes issues with the tw macro, use string styles instead
 //! FIX: the outer div function is still available on different pages, causing the page ui to overlap
@@ -40,8 +39,8 @@ export const Welcome = () => {
           A lightweight JavaScript framework for building fast, reactive UI.
         </p>
         <p tw="text-gray-400 text-md sm:text-lg max-w-xl mx-auto leading-relaxed">
-          Edit{" "}
-          <code tw="bg-gray-800 px-1 rounded text-green-400">src/app.tsx</code>{" "}
+          Edit{' '}
+          <code tw="bg-gray-800 px-1 rounded text-green-400">src/app.tsx</code>{' '}
           file and save to reload.
         </p>
         <div tw="flex justify-center gap-6 mt-8">
@@ -51,13 +50,13 @@ export const Welcome = () => {
             }}
             tw="text-sm cursor-pointer px-8 py-3 text-white font-semibold rounded-lg shadow-lg focus:outline-none  transition duration-300 ease-in-out"
           >
-            Click: {"  "} {count}
+            Click: {'  '} {count}
           </button>
 
           <button
             onClick={() => {
               console.log(
-                "Current Path from reactive state:",
+                'Current Path from reactive state:',
                 currentPath.value
               );
             }}

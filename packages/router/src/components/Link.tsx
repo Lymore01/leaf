@@ -1,6 +1,5 @@
-import { LinkProps } from "../../../../core/vnode/types.js";
-import { h } from "../../../../jsx/h.js";
-import { navigate } from "../index.js";
+import { LinkProps } from '@core';
+import { navigate } from '../index.js';
 
 export const Link = (props: LinkProps) => {
   const handleNavigation = (e: Event) => {

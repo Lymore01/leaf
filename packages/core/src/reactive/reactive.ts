@@ -1,8 +1,8 @@
-import { LeafNode } from "../vnode/types";
+import { LeafNode } from '../../../shared/types/types';
 
 // use in shared state and router
 export function reactive<T extends object>(target: T): T {
-  console.log("Making object reactive:", target);
+  console.log('Making object reactive:', target);
   return new Proxy(target, {
     get(obj, key, receiver) {
       track(obj, key);
@@ -26,7 +26,11 @@ const targetMap = new WeakMap<object, Map<string | symbol, Set<EffectFn>>>();
 // records which effect is using which state key
 function track(target: object, key: string | symbol) {
   if (!activeEffect) return;
-  console.log("Tracking dependency:", { target, key, effect: activeEffect.name });
+  console.log('Tracking dependency:', {
+    target,
+    key,
+    effect: activeEffect.name,
+  });
 
   let depsMap = targetMap.get(target);
   if (!depsMap) {
@@ -48,7 +52,6 @@ function trigger(target: object, key: string | symbol) {
   const depsMap = targetMap.get(target);
   if (!depsMap) return;
 
-
   const dep = depsMap.get(key);
   if (dep) {
     dep.forEach((effect) => effect());
@@ -65,7 +68,7 @@ export function effect(fn: () => void | (() => void)) {
     activeEffect = runner;
 
     const result = fn();
-    if (typeof result === "function") {
+    if (typeof result === 'function') {
       cleanup = result;
     } else {
       cleanup = null;

@@ -1,4 +1,4 @@
-import { VNodeBase } from "../../../../core/vnode/VNodeBase";
+import { VNodeBase } from '@core';
 
 type MountFn = (component: () => VNodeBase, root: HTMLElement) => void;
 
@@ -10,8 +10,8 @@ export function createRouter(
 ) {
   mount(app, root);
 
-  window.addEventListener("popstate", () => {
-    console.log("[Router] Detected popstate event, remounting App...");
+  window.addEventListener('popstate', () => {
+    console.log('[Router] Detected popstate event, remounting App...');
     remount(app);
   });
 }

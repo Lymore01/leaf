@@ -1,4 +1,4 @@
-import { _mount, _remount } from "./mount.js";
+import { _mount, _remount } from './mount.js';
 
 const mount = _mount;
 const remount = _remount;

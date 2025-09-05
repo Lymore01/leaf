@@ -1,13 +1,12 @@
-import { diff } from "../core/diffing/diff.js";
-import { applyPatch } from "../core/vnode/patch.js";
-// import { effect } from "../core/reactive/reactive.js";
-import { VNodeBase } from "../core/vnode/VNodeBase.js";
 import {
+  diff,
+  applyPatch,
+  VNodeBase,
   flushPostRenderEffects,
   prepareHooksForRender,
   setRerenderFn,
-} from "../core/hooks/hook.js";
-import { effect } from "../core/reactive/reactive.js";
+  effect,
+} from '@core';
 
 let rootVNode: VNodeBase | null = null;
 let currentComponent: () => VNodeBase;
@@ -26,7 +25,6 @@ export function _mount(component: () => VNodeBase, container: HTMLElement) {
       const dom = newVNode.mount();
       container.appendChild(dom);
       rootVNode = newVNode;
-
     } else {
       const patch = diff(rootVNode, newVNode);
       applyPatch(rootVNode, patch);
@@ -36,7 +34,7 @@ export function _mount(component: () => VNodeBase, container: HTMLElement) {
   };
 
   setRerenderFn(rerenderFn);
-  
+
   // rerenderFn();
   effect(rerenderFn);
 }
@@ -44,7 +42,7 @@ export function _mount(component: () => VNodeBase, container: HTMLElement) {
 export function _remount(newComponent: () => VNodeBase) {
   currentComponent = newComponent;
   rootVNode = null;
-  containerRef.innerHTML = "";
-  
+  containerRef.innerHTML = '';
+
   _mount(currentComponent, containerRef);
 }

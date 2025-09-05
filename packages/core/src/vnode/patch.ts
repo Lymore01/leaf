@@ -1,17 +1,16 @@
-import { testClickEvent } from "../../utils/dom.js";
-import { diff } from "../diffing/diff.js";
-import { ElementVNode } from "./ElementVNode.js";
-import { TextVNode } from "./TextVNode.js";
-import { Patch } from "./types.js";
-import { VNodeBase } from "./VNodeBase.js";
+import { diff } from '../diffing/diff.js';
+import { ElementVNode } from './ElementVNode.js';
+import { TextVNode } from './TextVNode.js';
+import { Patch } from '../../../shared/types/types.js';
+import { VNodeBase } from './VNodeBase.js';
 
 export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
   if (!patch) return null;
 
   switch (patch.type) {
-    case "REPLACE": {
+    case 'REPLACE': {
       const newDom = patch.newVNode.mount();
-      if (oldVNode.dom && "replaceWith" in oldVNode.dom) {
+      if (oldVNode.dom && 'replaceWith' in oldVNode.dom) {
         (oldVNode.dom as ChildNode).replaceWith(newDom);
       }
 
@@ -19,12 +18,12 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
       break;
     }
 
-    case "REMOVE": {
+    case 'REMOVE': {
       oldVNode.unmount();
       break;
     }
 
-    case "TEXT": {
+    case 'TEXT': {
       if (oldVNode instanceof TextVNode && oldVNode.dom) {
         if (oldVNode.text !== patch.newText) {
           console.log(
@@ -39,21 +38,21 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
 
     // ! fix: mixing elements of different types, all with keys, causes a reference error
 
-    case "KEYED_UPDATE_CHILDREN": {
+    case 'KEYED_UPDATE_CHILDREN': {
       if (!(oldVNode instanceof ElementVNode) || !oldVNode.dom) break;
 
       const parentEl = oldVNode.dom.parentElement;
-      console.log("Parent element (overwritten): ", parentEl);
+      console.log('Parent element (overwritten): ', parentEl);
 
       for (const childPatch of patch.keyedPatches) {
-        if (childPatch.type === "REMOVE") {
+        if (childPatch.type === 'REMOVE') {
           childPatch.oldVNode.unmount();
         }
       }
 
       for (const childPatch of patch.keyedPatches) {
         switch (childPatch.type) {
-          case "INSERT": {
+          case 'INSERT': {
             const newDom = childPatch.newVNode.mount();
             const refNode = parentEl?.childNodes[childPatch.index] || null;
             parentEl?.insertBefore(newDom, refNode);
@@ -61,7 +60,7 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
             break;
           }
 
-          case "PATCH": {
+          case 'PATCH': {
             const innerPatch = diff(childPatch.oldVNode, childPatch.newVNode);
             applyPatch(childPatch.oldVNode, innerPatch);
             break;
@@ -72,16 +71,16 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
       break;
     }
 
-    case "UPDATE_CHILDREN": {
+    case 'UPDATE_CHILDREN': {
       if (oldVNode instanceof ElementVNode && oldVNode.dom) {
         const el = oldVNode.dom;
 
         // remove old props
         for (const key of patch.propsToRemove) {
-          if (key.startsWith("on")) {
+          if (key.startsWith('on')) {
             const eventName = key.slice(2).toLowerCase();
             const oldHandler = oldVNode.props[key];
-            if (typeof oldHandler === "function") {
+            if (typeof oldHandler === 'function') {
               el.removeEventListener(eventName, oldHandler);
               oldVNode.attachedListeners?.delete(eventName);
             }
@@ -92,12 +91,12 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
 
         // props to update
         for (const [key, value] of Object.entries(patch.propsToUpdate)) {
-          if (key.startsWith("on") && typeof value === "function") {
+          if (key.startsWith('on') && typeof value === 'function') {
             const eventName = key.slice(2).toLowerCase();
 
             const prevHandler = oldVNode.attachedListeners?.get(eventName);
 
-            if (typeof prevHandler === "function") {
+            if (typeof prevHandler === 'function') {
               el.removeEventListener(eventName, prevHandler);
               oldVNode.attachedListeners?.delete(eventName);
             }
@@ -119,7 +118,7 @@ export function applyPatch(oldVNode: VNodeBase, patch: Patch | null) {
             }
           }
         }
-      } else if ("children" in oldVNode && Array.isArray(oldVNode.children)) {
+      } else if ('children' in oldVNode && Array.isArray(oldVNode.children)) {
         for (let i = 0; i < patch.childrenPatches.length; i++) {
           const childPatch = patch.childrenPatches[i];
           const oldChild = oldVNode.children[i];

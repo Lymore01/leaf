@@ -1,13 +1,13 @@
-import { diff } from "../diffing/diff.js";
-import { applyPatch } from "./patch.js";
-import { renderElementNode } from "./render.js";
+import { diff } from '../diffing/diff.js';
+import { applyPatch } from './patch.js';
+import { renderElementNode } from './render.js';
 import {
   ElementVNodeProps,
   LifecycleHookName,
   LifecycleHookFn,
-} from "./types.js";
-import { removeNode } from "./unmount.js";
-import { VNodeBase } from "./VNodeBase.js";
+} from '../../../shared/types/types.js';
+import { removeNode } from './unmount.js';
+import { VNodeBase } from './VNodeBase.js';
 
 export class ElementVNode extends VNodeBase {
   type: string;
@@ -45,7 +45,7 @@ export class ElementVNode extends VNodeBase {
   mount(): HTMLElement {
     const el = renderElementNode(this);
 
-    this.callHook("onMount");
+    this.callHook('onMount');
 
     return el;
   }
@@ -57,7 +57,7 @@ export class ElementVNode extends VNodeBase {
     this.props = newNode.props;
     this.children = newNode.children;
 
-    this.callHook("onUpdate", newNode);
+    this.callHook('onUpdate', newNode);
   }
 
   unmount(): void {
@@ -68,6 +68,6 @@ export class ElementVNode extends VNodeBase {
     removeNode(this);
 
     this.attachedListeners?.clear();
-    this.callHook("onUnmount");
+    this.callHook('onUnmount');
   }
 }

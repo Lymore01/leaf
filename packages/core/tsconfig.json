@@ -1,10 +1,14 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src",
+    "rootDir": "../",
     "outDir": ".leaf/main",
-    "baseUrl": "src"
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@shared/utils": ["../shared/utils/index.ts"]
+    }
   },
-  "include": ["src", "global.d.ts", "vite-env.d.ts"],
+  "include": ["src", "../shared"],
   "exclude": ["node_modules", ".leaf", "tests"]
 }

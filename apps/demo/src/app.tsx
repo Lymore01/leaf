@@ -1,8 +1,7 @@
-import { h } from "@jsx/h.js";
-import { Foo } from "./components/foo.js";
-import { NotFound } from "./components/not-found.js";
-import { Welcome } from "./components/welcome.js";
-import { Router, Route, Routes } from "./packages/leaf-router/src/index.js";
+import { Foo } from '../components/foo.js';
+import { NotFound } from '../components/not-found.js';
+import { Welcome } from '../components/welcome.js';
+import { Router, Route, Routes } from '@router';
 
 export const App = () => {
   return (

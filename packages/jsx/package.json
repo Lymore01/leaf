@@ -9,9 +9,6 @@
   "version": "0.1.0",
   "main": ".leaf/main/index.js",
   "types": ".leaf/main/index.d.ts",
-  "exports": {
-    "./jsx-runtime": "./src/jsx-runtime.ts"
-  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "vite",
