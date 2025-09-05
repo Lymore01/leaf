@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../.leaf/jsx",
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      "@core": ["../core/src/index.ts"],
+      "@router": ["../router/src/index.ts"],
+    }
+  },
+  "include": ["src"],
+  "references": [
+    { "path": "../core" },
+  ]
+}

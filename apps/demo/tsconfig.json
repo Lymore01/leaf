@@ -1,0 +1,25 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "../../.leaf/demo",
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@jsx": ["../../packages/jsx/src/index.ts"],
+      "@jsx/jsx-dev-runtime": ["../../packages/jsx/src/jsx-runtime.ts"],
+      "@leaf/jsx/jsx-runtime": ["../../packages/jsx/src/jsx-runtime.ts"],
+      "@runtime": ["../../packages/runtime/src/index.ts"],
+      "@router": ["../../packages/router/src/index.ts"],
+      "@core": ["../../packages/core/src/index.ts"],
+      "@core/*": ["../../packages/core/src/*"]
+    }
+  },
+  "include": ["vite-env.d.ts", "types.d.ts", "components/**/*", "src"],
+  "references": [
+    { "path": "../../packages/jsx" },
+    { "path": "../../packages/router" },
+    { "path": "../../packages/core" },
+    { "path": "../../packages/runtime" }
+  ]
+}

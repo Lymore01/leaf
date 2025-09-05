@@ -1,0 +1,15 @@
+{
+  "name": "demo",
+  "description": "A demo Leaf project",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build:tw": "pnpm exec tailwindcss-cli -i ./src/app.css -o ./.leaf/output.css --watch",
+    "build:app": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@leaf/types": "workspace:*"
+  }
+}

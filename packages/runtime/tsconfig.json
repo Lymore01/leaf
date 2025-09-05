@@ -1,0 +1,19 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../",
+    "outDir": ".leaf/main",
+    "baseUrl": "src",
+    "paths": {
+      "@router": ["../../router/src/index.ts"],
+      "@core": ["../../core/src/index.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "global.d.ts",
+    "vite-env.d.ts",
+    "../../packages/router/src/index.ts"
+  ],
+  "exclude": ["node_modules", ".leaf", "tests"]
+}

@@ -1,0 +1,22 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../",
+    "outDir": "../../.leaf/router",
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@jsx": ["../../packages/jsx/src/index.ts"],
+      "@shared/utils": ["../shared/utils/index.ts"],
+      "@shared/types": ["../shared/types/types.ts"],
+      "@core": ["../../packages/core/src/index.ts"],
+      "@leaf/jsx/jsx-runtime": ["../../packages/jsx/src/jsx-runtime.ts"]
+    }
+  },
+  "include": [
+    "src",
+    "../shared",
+    "types.d.ts",
+    "../../packages/jsx/src/jsx-runtime.ts"
+  ]
+}

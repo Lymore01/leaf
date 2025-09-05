@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "../",
+    "outDir": ".leaf/main",
+    "baseUrl": ".",
+    "composite": true,
+    "paths": {
+      "@shared/utils": ["../shared/utils/index.ts"]
+    }
+  },
+  "include": ["src", "../shared"],
+  "exclude": ["node_modules", ".leaf", "tests"]
+}
